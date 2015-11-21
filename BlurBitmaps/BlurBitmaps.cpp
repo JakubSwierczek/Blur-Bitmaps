@@ -44,6 +44,7 @@ int main(int argc, char *argv[])
 {
 	std::string input_file_name("");
 	std::string output_file_name("");
+	std::string log_file_name("");
 	unsigned short threads = 0;
 	auto c_dll = false;
 	auto asm_dll = false;
@@ -60,6 +61,8 @@ int main(int argc, char *argv[])
 			output_file_name = action;
 		else if (mode == "-t")
 			threads = action[0] - '0';
+		else if (mode == "-f")
+			log_file_name = action;
 		else if (mode == "-dll")
 			if (action == "C" || action == "c")
 				c_dll = true;
