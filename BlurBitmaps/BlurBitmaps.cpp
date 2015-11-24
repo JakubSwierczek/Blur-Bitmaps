@@ -8,7 +8,6 @@
 #include <vector>
 #include <chrono>
 
-enum pointers {red, green, blue};
 double creating_threads(unsigned char* input, unsigned char* output, const int width, const int height, short threads, FUNCTION my_function)
 {	
 	auto shifts = new int[threads];
@@ -31,11 +30,15 @@ double creating_threads(unsigned char* input, unsigned char* output, const int w
 
 	//waiting for all threads are done
 	for (auto i = 0; i < threads; i++)
-		if (array_thread[i].joinable())
+		//if (array_thread[i].joinable())
 			array_thread[i].join();
 	
 	auto end_time = std::chrono::steady_clock::now();
 	auto duration = end_time - start_time;
+
+	delete[] shifts;
+	delete[] fragment_height;
+	delete[] array_thread;
 
 	return std::chrono::duration<double, std::milli>(duration).count();
 
@@ -152,15 +155,16 @@ int main(int argc, char *argv[])
 	//saving image
 	output_image.save_image(output_file_name);
 	
-	delete input;
-	delete output;
+	delete[] input;
+	delete[] output;
 
 
 
 	///////////////////////////////////////////////////////////////////
 	View view(height, width, threads, time_c, time_asm);
 	view.print_results_on_the_console();
-	view.print_result_to_the_file("log.txt");
+	if(log_file_name != "")
+		view.print_result_to_the_file(log_file_name);
 	///////////////////////////////////////////////////////////////////////
 
 	return 0;
