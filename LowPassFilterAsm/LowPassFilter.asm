@@ -78,7 +78,7 @@ LowPassFilterProc PROC
 
 	; array with value to divider 
 	;mov r15, offset arraymul ; multiplication instead of dividing
-	mov r15, offset arraydiv2
+	mov r15, offset arraydiv
 	vmovq xmm0, qword ptr [r15]
 	vpmovzxbd xmm15, xmm0
 	vpmovzxbd xmm14, xmm0
@@ -120,7 +120,7 @@ LOOP_A:
 	vpaddd xmm10, xmm3, xmm10
 	
 	vpaddd xmm10, xmm4, xmm10
-	;vpaddd xmm10, xmm5, xmm10
+	vpaddd xmm10, xmm5, xmm10
 	vpaddd xmm10, xmm6, xmm10
 
 	vpaddd xmm10, xmm7, xmm10
@@ -236,6 +236,5 @@ ret
 LowPassFilterProc ENDP
 ArrayMul	db 28, 28, 28, 28, 28, 28, 28, 28
 ArrayDiv	db 9, 9, 9, 9, 9, 9, 9, 9 
-ArrayDiv2	db 8, 8, 8, 8, 8, 8, 8, 8
 END
 
